@@ -1,0 +1,107 @@
+---
+Page title: Webhooks
+Description: Webhooks are used to communicate back to the Job Provider when a job event has been triggered.
+---
+
+The `Job` lifecycle is closely measured and monitored by JobGorilla to provide the best possible experience for both the
+Job Provider and the Job Board. To facilitate this, JobGorilla provides a webhook system that allows the Job Provider
+to receive notifications when a job event has been triggered.
+
+## Registering Webhooks
+Webhooks can be registered by opening a support ticket with JobGorilla. The support team will provide you with a
+confirmation when the webhook has been provisioned.
+
+Please provide the following information when registering a webhook:
+
+<Steps>
+  ### Webhook URL
+    The URL of the webhook endpoint. This is the URL where the webhook payload will be sent.
+    - Must be HTTPS
+    - Must Accept POST requests
+    - Must Accept `application/json` content type
+  ### Event Types
+    The list of event types that you would like to receive notifications for.
+    - `RECEIVED`
+    - `REMOVED`
+    - `PULLED`
+</Steps>
+
+## Event Types
+| Event Type | Description                                                                             |
+|------------|-----------------------------------------------------------------------------------------|
+| `RECEIVED` | The job has been received by the provider.                                              |
+| `REMOVED`  | The job has been removed by the provider.                                               |
+| `PULLED`   | The job has been pulled by a Job Board.                                                 |
+
+## Event Types (Coming Soon)
+| Event Type | Description                                                                             |
+|------------|-----------------------------------------------------------------------------------------|
+| `SCORED`   | The job has been scored by the intelligence with the attached metadata about the score. |
+| `VIEWED`   | The job has been viewed on a Job Board.                                                 |
+| `APPLIED`  | The job has been applied to on a Job Board.                                             |
+
+### `RECEIVED`
+When a job is seen for the first time in the Ingestion feed, JobGorilla sends a `RECEIVED` event to the Job Provider.
+This event can be used to let your customers know that the job has been processed for inclusion in job feed and will
+be queued up for a job score.
+
+### `REMOVED`
+When a job is removed from the Ingestion feed, JobGorilla sends a `REMOVED` event to the Job Provider.
+
+### `PULLED`
+When a job is pulled by a Job Board, JobGorilla sends a `PULLED` event to the Job Provider. This event can be used to
+let your customers know which Job Boards have the job and are publishing it for views and applications.
+
+## Webhook Payload
+The webhook payload is a JSON object that contains the following fields:
+
+| Field        | Description                                                  |
+|--------------|--------------------------------------------------------------|
+| `jobBoardId` | The ID of the Job Board that pulled the job.                 |
+| `eventType`  | The type of event that has been triggered.                   |
+| `timestamp`  | The timestamp when the event was triggered.                  |
+| `jobId`      | The list of Job IDs of the job that the event is related to. |
+
+### Example `RECEIVED` Event
+```
+{
+  "eventType": "RECEIVED",
+  "timestamp": "2024-09-25T16:05:03.851584116Z",
+  "jobId": [
+    "27724555",
+    "27725373",
+    "27733362",
+    "27734330",
+    "27740006"
+  ]
+}
+```
+
+### Example `REMOVED` Event
+```
+{
+"eventType": "REMOVED",
+"timestamp": "2024-09-25T16:05:03.851584116Z",
+"jobId": [
+"27724555",
+"27725373",
+"27733362",
+]
+}
+```
+
+### Example `PULLED` Event
+```
+{
+  "jobBoardId": 1,
+  "eventType": "PULLED",
+  "timestamp": "2024-09-25T16:05:03.851584116Z",
+  "jobId": [
+    "27724555",
+    "27725373",
+    "27733362",
+    "27734330",
+    "27740006"
+  ]
+}
+```

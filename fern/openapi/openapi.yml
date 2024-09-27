@@ -1,0 +1,198 @@
+openapi: 3.0.1
+info:
+  title: JobGorilla API
+  description: Endpoints for interfacing with the JobGorilla Job Distribution Engine.
+  version: 1.0.1
+servers:
+  - url: https://feed.jobgorilla.com
+    description: Production
+    x-fern-server-name: production-server
+tags:
+  - name: Job Feed Operations
+    description: Endpoints for interfacing with the JobGorilla Job Distribution Engine.
+  - name: Meta Data Operations
+    description: >-
+      Metadata and reference data for components of the JobGorilla Job
+      Distribution Engine.
+paths:
+  /meta/boards:
+    get:
+      tags:
+        - Meta Data Operations
+      summary: Job Boards
+      description: Returns a list of supported Job Boards and their details.
+      operationId: getJobBoards
+      parameters:
+        - name: X-JobGorilla-Key
+          in: header
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/JobBoard'
+        '401':
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                type: string
+  /feed/board/{guid}:
+    get:
+      tags:
+        - Job Feed Operations
+      summary: Job Feed
+      description: Returns a job feed for the given board ID.
+      operationId: getJobFeed
+      parameters:
+        - name: X-JobGorilla-Key
+          in: header
+          required: false
+          schema:
+            type: string
+        - name: guid
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Job'
+        '401':
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                type: string
+components:
+  schemas:
+    JobBoard:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        guid:
+          type: string
+        name:
+          type: string
+        preferences:
+          type: array
+          items:
+            $ref: '#/components/schemas/Preference'
+    Preference:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type: string
+        value:
+          type: string
+    Job:
+      type: object
+      properties:
+        id:
+          type: string
+        jobTitle:
+          type: string
+        description:
+          type: string
+        applyUrl:
+          type: string
+        companyId:
+          type: integer
+          format: int64
+        company:
+          type: string
+        companyAddress:
+          type: string
+        companyAddress2:
+          type: string
+        companyCity:
+          type: string
+        companyState:
+          type: string
+        companyZip:
+          type: string
+        location:
+          type: string
+        city:
+          type: string
+        workFromHome:
+          type: boolean
+        workRemote:
+          type: boolean
+        workHybrid:
+          type: boolean
+        partTime:
+          type: boolean
+        openings:
+          type: integer
+          format: int32
+        state:
+          type: string
+        stateName:
+          type: string
+        countryId:
+          type: integer
+          format: int32
+        country:
+          type: string
+        postalCode:
+          type: string
+        placementTypeId:
+          type: integer
+          format: int32
+        maxPay:
+          type: number
+          format: double
+        minPay:
+          type: number
+          format: double
+        maxPayTypeId:
+          type: integer
+          format: int32
+        maxPayType:
+          type: string
+        minPayTypeId:
+          type: integer
+          format: int32
+        minPayType:
+          type: string
+        openDate:
+          type: string
+          format: date-time
+        endDate:
+          type: string
+          format: date-time
+        createDate:
+          type: string
+          format: date-time
+        modifyDate:
+          type: string
+          format: date-time
+        duration:
+          type: string
+        jobGroup:
+          type: string
+        directEmployer:
+          type: boolean
+        jobGorillaId:
+          type: integer
+          format: int64
+        jobGorillaGuid:
+          type: string

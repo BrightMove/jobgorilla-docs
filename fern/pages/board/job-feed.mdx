@@ -1,0 +1,74 @@
+---
+title: "Job Feeds"
+description: "Get job feeds as a subscribing job board."
+---
+
+When a Job Board requests a job feed, unless otherwise specifically instructed to pull a feed with a custom URL, the feed request and data are described here.
+
+## Request the Feed
+
+When you register as a JobGorilla certified job board, you assigned a URL and Key to get your job feed.
+
+<Tip>These are referred to as your JobGorilla Job Board ID & Job Board Key.</Tip>
+
+The request URL is `http://feed.jobgorilla.com/feed/board/${JobBoardID}`
+
+It will be difficult to pull your feed with a browser since there are some important `Header` elements that must be included.
+
+| Header             | Value(s)                         |
+|--------------------|----------------------------------|
+| `X-JobGorilla-Key` | Your Job Board Key               |
+| `Accept`           | `application/json` or `text/xml` |
+| `Accept-Encoding`  | `utf-8`                          |
+
+Here is an example CURL request to get a job feed.
+
+```shell
+curl -X GET "https://feed.jobgorilla.com/feed/board/d01b5273-36d5-4f61-94d3-cf6b1212ec15" \
+-H "X-JobGorilla-Key: 1a6e5f1c-169e-428c-91b3-5dd6f7c5862f" \
+-H "Accept: application/json" \
+-H "Accept-Encoding: utf-8"
+```
+
+## Job Board Preferences
+
+There are several preferences that need to be configured when your Job Board is onboarded. These preferences can be changed and will determine which jobs are in your feed.
+
+| ID | Preference   | Default | Description                                          |
+|----|--------------|---------|------------------------------------------------------|
+| 1  | job_age_days | `90`    | How old (in days) are the jobs included in the feed. |
+| 2  | direct_hire  | `false` | Include direct hire jobs.                            |
+| 3  | staffing     | `false` | Include jobs from staffing companies.                |
+
+## Job Schema
+
+| Field             | Description                                                    | Data Type            |
+|-------------------|----------------------------------------------------------------|----------------------|
+| `id`              | Unique job identifier from the job provider                    | `string`             |
+| `jobTitle`        | Title of the job                                               | `string`             |
+| `description`     | Job description in HTML format                                 | `string (HTML)`      |
+| `applyUrl`        | URL for applying to the job                                    | `string (URL)`       |
+| `companyId`       | ID of the company posting the job                              | `integer`            |
+| `company`         | Name of the company                                            | `string`             |
+| `city`            | City where the job is located                                  | `string`             |
+| `state`           | State abbreviation where the job is located                    | `string`             |
+| `stateName`       | Full state name                                                | `string`             |
+| `postalCode`      | Postal code for the job location (if available)                | `string`             |
+| `countryId`       | ID of the country where the job is located                     | `integer`            |
+| `country`         | Country code where the job is located                          | `string`             |
+| `workFromHome`    | Indicates if the job allows working from home                  | `boolean`            |
+| `workRemote`      | Indicates if the job is remote                                 | `boolean`            |
+| `workHybrid`      | Indicates if the job allows a hybrid work setup                | `boolean`            |
+| `partTime`        | Indicates if the job is part-time                              | `boolean`            |
+| `directEmployer`  | Indicates if the employer is direct                            | `boolean`            |
+| `openings`        | Number of job openings                                         | `integer`            |
+| `openDate`        | Date when the job was opened (ISO 8601 format)                 | `string (date-time)` |
+| `minPay`          | Minimum pay for the job                                        | `decimal`            |
+| `maxPay`          | Maximum pay for the job                                        | `decimal`            |
+| `minPayType`      | Type of minimum pay (e.g., hourly, salary)                     | `string`             |
+| `maxPayType`      | Type of maximum pay (e.g., hourly, salary)                     | `string`             |
+| `minPayTypeId`    | ID for the type of minimum pay                                 | `integer`            |
+| `maxPayTypeId`    | ID for the type of maximum pay                                 | `integer`            |
+| `placementTypeId` | ID for the type of job placement (e.g., direct hire, contract) | `integer`            |
+| `jobGorillaId`    | The JobGorilla Unique ID                                       | `long`               |
+| `jobGorillaGuid`  | The JobGorilla Generated Unique ID                             | `string`             |

@@ -1,0 +1,29 @@
+---
+title: "Job Ingestion"
+description: "Prepare Jobs from your ATS for ingestion into JobGorilla."
+---
+
+JobGorilla supports a wide variety of job data ingestion methods. This page provides an overview of the different
+methods available to Job Providers.
+
+<Note>Our goal is to make getting your job data into JobGorilla reliably, predictably and easily.  If you dont see an
+ingestion method here that works for your organization, please reach out to us so we can figure out a way that works
+for all of our customers.</Note>
+
+## Ingestion Methods
+
+### Snowflake (Preferred)
+Create a data table in your Snowflake account and share the data with JobGorilla. We will plugin the table name into
+your onboarding form and have your jobs live in JobGorilla in no time.
+
+<Tip>Contact JobGorilla support for the latest table schema and to get started.</Tip>
+
+### Landing Zone
+We have the option for you to drop an export file in a shared and secured location such as Google Drive or One Drive.
+Our system will pick up the file and ingest the jobs into JobGorilla.
+
+<Tip>Contact JobGorilla support for the latest file format to get started.</Tip>
+
+### API - Coming Soon
+When our API ingestion is in place you will be able to update JobGorilla with your job data in real-time by posting
+payloads to our REST endpoints.
