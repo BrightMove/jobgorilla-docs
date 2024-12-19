@@ -32,6 +32,13 @@ navigation:
         path: pages/provider/job-ingestion.mdx
       - page: "Webhooks"
         path: pages/provider/webhooks.mdx
+  - section: Data Reference
+    slug: data
+    contents:
+      - page: "Placement Types"
+        path: pages/data/placement-types.mdx
+      - page: "Pay Types"
+        path: pages/data/pay-types.mdx
   - api: API Reference
 
 logo:

@@ -32,12 +32,12 @@ Please provide the following information when registering a webhook:
 | `RECEIVED` | The job has been received by the provider.                                              |
 | `REMOVED`  | The job has been removed by the provider.                                               |
 | `PULLED`   | The job has been pulled by a Job Board.                                                 |
+| `VIEWED`   | The job has been viewed on a Job Board.                                                 |
 
 ## Event Types (Coming Soon)
 | Event Type | Description                                                                             |
 |------------|-----------------------------------------------------------------------------------------|
 | `SCORED`   | The job has been scored by the intelligence with the attached metadata about the score. |
-| `VIEWED`   | The job has been viewed on a Job Board.                                                 |
 | `APPLIED`  | The job has been applied to on a Job Board.                                             |
 
 ### `RECEIVED`
@@ -51,6 +51,10 @@ When a job is removed from the Ingestion feed, JobGorilla sends a `REMOVED` even
 ### `PULLED`
 When a job is pulled by a Job Board, JobGorilla sends a `PULLED` event to the Job Provider. This event can be used to
 let your customers know which Job Boards have the job and are publishing it for views and applications.
+
+### `VIEWED`
+When a job is viewed by a candidate on a Job Board, JobGorilla sends a `VIEWED` event to the Job Provider. This event
+can be used to let your customers know how many views a job has received on a Job Board.
 
 ## Webhook Payload
 The webhook payload is a JSON object that contains the following fields:
