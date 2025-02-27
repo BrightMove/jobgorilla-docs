@@ -11,9 +11,9 @@ title: JobGorilla | Documentation
 layout:
   header-height: 100px
   searchbar-placement: header
-  page-width: full
+  page-width: wide
   tabs-placement: header
-  content-alignment: left
+  content-alignment: center
 
 navigation:
   - section: Getting Started
@@ -30,6 +30,8 @@ navigation:
     contents:
       - page: "Job Ingestion"
         path: pages/provider/job-ingestion.mdx
+      - page: "Screener Questions"
+        path: pages/provider/screener-questions.mdx
       - page: "Webhooks"
         path: pages/provider/webhooks.mdx
   - section: Data Reference

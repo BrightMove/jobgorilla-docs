@@ -1,0 +1,118 @@
+---
+title: "Screener Questions"
+description: "Provide structured screener questions for job applicants via a standardized format."
+---
+
+JobGorilla supports screener questions that can be presented to job applicants during the application process. This page outlines the specifications for implementing and delivering screener questions via the `screener_questions_url` field.
+
+<Note>
+  Screener questions allow you to qualify candidates early in the application process, improving the quality of applicants and reducing time-to-hire.
+</Note>
+
+## Overview
+
+The `screener_questions_url` field in your job data enables you to provide a URL that JobGorilla will query to obtain a list of screening questions for a specific job. When a candidate applies to a job with screener questions enabled, these questions will be presented to the applicant as part of the application flow.
+
+## Endpoint Requirements
+
+When JobGorilla sends a request to your `screener_questions_url`:
+
+- The request will be a `GET` request
+- The URL may include a query parameter with the job ID
+- Your endpoint must return a JSON response containing a list of `ScreenerQuestion` objects
+
+<Tip>
+  Ensure your endpoint has minimal latency to provide a smooth applicant experience. We recommend a response time under 500ms.
+</Tip>
+
+## Response Format
+
+Your endpoint must return a list of `ScreenerQuestion` objects in the following format:
+
+```json
+[
+  {
+    "id": "q1",
+    "type": "select",
+    "required": true,
+    "requiredCorrect": false,
+    "question": "How many years of experience do you have with Java?",
+    "options": [
+      {
+        "label": "Less than 1 year",
+        "value": "0-1",
+        "correct": false
+      },
+      {
+        "label": "1-3 years",
+        "value": "1-3",
+        "correct": false
+      },
+      {
+        "label": "3+ years",
+        "value": "3+",
+        "correct": true
+      }
+    ]
+  },
+  {
+    "id": "q2",
+    "type": "text",
+    "required": true,
+    "question": "What is your GitHub username?"
+  }
+]
+```
+
+## Data Models
+
+Below are the detailed specifications for the data models used in screener questions:
+
+### ScreenerQuestion
+
+| **Field** | **Description** | **Data Type** | **Required** |
+|-----------|-----------------|---------------|--------------|
+| `id` | Unique identifier for the question | String | Yes |
+| `type` | Type of question (see QuestionType values) | String | Yes |
+| `required` | Whether an answer is required | Boolean | No (default: false) |
+| `requiredCorrect` | Whether the correct answer is required | Boolean | No (default: false) |
+| `question` | The question text to display | String | Yes |
+| `format` | Format restriction (for upload type) | String | No |
+| `min` | Minimum value (for numeric/date types) | Varies | No |
+| `max` | Maximum value (for numeric/date types) | Varies | No |
+| `limit` | Maximum number of selections (for multiselect) | Integer | No |
+| `options` | Options for select/multiselect | Array | Required for select/multiselect |
+
+### QuestionType Values
+
+| **Value** | **Description** | **Additional Fields** |
+|-----------|-----------------|------------------------|
+| `text` | Single-line text input | None |
+| `textarea` | Multi-line text input | None |
+| `integer` | Numeric input (whole numbers) | `min`, `max` |
+| `decimal` | Numeric input (decimal numbers) | `min`, `max` |
+| `date` | Date selector | `min`, `max` (ISO date strings) |
+| `select` | Single-select dropdown | `options` |
+| `multiselect` | Multi-select checklist | `options`, `limit` |
+| `upload` | File upload | `format` |
+| `information` | Display text only (no input) | None |
+
+### QuestionOption
+
+| **Field** | **Description** | **Data Type** | **Required** |
+|-----------|-----------------|---------------|--------------|
+| `label` | Display text for the option | String | Yes |
+| `value` | Value to be submitted | String | Yes |
+| `correct` | Whether this is a correct answer | Boolean | No (default: false) |
+
+## Best Practices
+
+- **Keep it concise**: Limit the number of questions to 5-7 to prevent applicant drop-off
+- **Make it relevant**: Only ask questions that help qualify candidates for the specific role
+- **Use branching logic**: Consider using the `requiredCorrect` flag to filter candidates based on must-have qualifications
+- **Ensure reliability**: Your endpoint should have high availability and fast response times
+- **Test thoroughly**: Validate your questions with test applicants before going live
+
+<Note>
+  Your endpoint should be highly available and have minimal latency to ensure a smooth applicant experience.
+</Note>

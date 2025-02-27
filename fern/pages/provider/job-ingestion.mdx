@@ -19,51 +19,52 @@ your onboarding form and have your jobs live in JobGorilla in no time.
 <Tip>Job attributes change and morph over time. If you see something missing that is important to one of your feeds, let
   us know and we will get it added.</Tip>
 
-| **Column Name**                     | **Description**                                                 | **Data Type** | **Max Length** |
-|-------------------------------------|-----------------------------------------------------------------|---------------|----------------|
-| `id`                                | Unique identifier for the job posting.                          | NUMBER        |                |
-| `company_id`                        | Identifier for the company associated with the job posting.     | NUMBER        |                |
-| `company_name`                      | Name of the company.                                            | VARCHAR       | 200            |
-| `company_address`                   | Primary address of the company.                                 | VARCHAR       | 200            |
-| `company_address2`                  | Secondary address or additional address details.                | VARCHAR       | 200            |
-| `company_city`                      | City where the company is located.                              | VARCHAR       | 100            |
-| `company_state_abbr`                | Abbreviation of the state where the company is located.         | VARCHAR       | 10             |
-| `company_zip`                       | ZIP code of the company location.                               | VARCHAR       | 25             |
-| `direct_employer`                   | Indicates if the job is posted by the direct employer.          | BOOLEAN       |                |
-| `branding_company_name`             | Name of the company used for branding purposes.                 | VARCHAR       | 200            |
-| `public_company_name`               | Public-facing name of the company.                              | VARCHAR       | 200            |
-| `apply_url`                         | URL where applicants can apply for the job.                     | TEXT          |                |
-| `job_title`                         | Title of the job posting.                                       | TEXT          |                |
-| `openings`                          | Number of job openings available.                               | NUMBER        |                |
-| `location`                          | Detailed location information for the job.                      | TEXT          |                |
-| `city`                              | City of the job location.                                       | VARCHAR       | 400            |
-| `postal_code`                       | Postal code of the job location.                                | VARCHAR       | 25             |
-| `state_abbr`                        | Abbreviation of the state of the job location.                  | VARCHAR       | 10             |
-| `state_name`                        | Full name of the state of the job location.                     | VARCHAR       | 250            |
-| `country_code`                      | Country code of the job location.                               | VARCHAR       | 2              |
-| `country_name`                      | Full name of the country of the job location.                   | VARCHAR       | 600            |
-| `work_from_home`                    | Indicates if the job is work-from-home.                         | BOOLEAN       |                |
-| `work_remote`                       | Indicates if the job allows full remote work.                   | BOOLEAN       |                |
-| `work_hybrid`                       | Indicates if the job has a hybrid work model.                   | BOOLEAN       |                |
-| `part_time`                         | Indicates if the job is part-time.                              | BOOLEAN       |                |
-| `placement_type_id`                 | Identifier for the placement type of the job.                   | NUMBER        |                |
-| `max_pay`                           | Maximum pay for the job.                                        | NUMBER        | (16, 2)        |
-| `min_pay`                           | Minimum pay for the job.                                        | NUMBER        | (16, 2)        |
-| `min_pay_type_id`                   | Identifier for the minimum pay type.                            | NUMBER        |                |
-| `min_pay_type`                      | Description of the minimum pay type.                            | VARCHAR       | 10             |
-| `max_pay_type_id`                   | Identifier for the maximum pay type.                            | NUMBER        |                |
-| `max_pay_type`                      | Description of the maximum pay type.                            | VARCHAR       | 10             |
-| `open_date`                         | Date the job posting becomes active.                            | TIMESTAMPNTZ  |                |
-| `end_date`                          | Date the job posting is no longer active.                       | TIMESTAMPNTZ  |                |
-| `duration`                          | Duration of the job or posting.                                 | VARCHAR       | 100            |
-| `customer_job_id`                   | Customer-provided identifier for the job.                       | VARCHAR       | 50             |
-| `public_desc`                       | Public description of the job posting.                          | TEXT          |                |
-| `job_group_name`                    | Name of the group or category to which the job belongs.         | TEXT          |                |
-| `create_date`                       | Date the job posting record was created.                        | TIMESTAMPNTZ  |                |
-| `modify_date`                       | Date the job posting record was last modified.                  | TIMESTAMPNTZ  |                |
-| `enable_indeed_appy`                | Indicates if the job is enabled for Indeed Apply.               | BOOLEAN       |                |
-| `suppress_indeed_auto_refresh_date` | Indicates if the Indeed auto-refresh date should be suppressed. | BOOLEAN       |                |
-| `linkedin_company_id`               | LinkedIn company identifier associated with the job posting.    | NUMBER        |                |
+| **Column Name**                     | **Description**                                                        | **Data Type** | **Max Length** |
+|-------------------------------------|------------------------------------------------------------------------|---------------|----------------|
+| `id`                                | Unique identifier for the job posting.                                 | NUMBER        |                |
+| `company_id`                        | Identifier for the company associated with the job posting.            | NUMBER        |                |
+| `company_name`                      | Name of the company.                                                   | VARCHAR       | 200            |
+| `company_address`                   | Primary address of the company.                                        | VARCHAR       | 200            |
+| `company_address2`                  | Secondary address or additional address details.                       | VARCHAR       | 200            |
+| `company_city`                      | City where the company is located.                                     | VARCHAR       | 100            |
+| `company_state_abbr`                | Abbreviation of the state where the company is located.                | VARCHAR       | 10             |
+| `company_zip`                       | ZIP code of the company location.                                      | VARCHAR       | 25             |
+| `direct_employer`                   | Indicates if the job is posted by the direct employer.                 | BOOLEAN       |                |
+| `branding_company_name`             | Name of the company used for branding purposes.                        | VARCHAR       | 200            |
+| `public_company_name`               | Public-facing name of the company.                                     | VARCHAR       | 200            |
+| `apply_url`                         | URL where applicants can apply for the job.                            | TEXT          |                |
+| `job_title`                         | Title of the job posting.                                              | TEXT          |                |
+| `openings`                          | Number of job openings available.                                      | NUMBER        |                |
+| `location`                          | Detailed location information for the job.                             | TEXT          |                |
+| `city`                              | City of the job location.                                              | VARCHAR       | 400            |
+| `postal_code`                       | Postal code of the job location.                                       | VARCHAR       | 25             |
+| `state_abbr`                        | Abbreviation of the state of the job location.                         | VARCHAR       | 10             |
+| `state_name`                        | Full name of the state of the job location.                            | VARCHAR       | 250            |
+| `country_code`                      | Country code of the job location.                                      | VARCHAR       | 2              |
+| `country_name`                      | Full name of the country of the job location.                          | VARCHAR       | 600            |
+| `work_from_home`                    | Indicates if the job is work-from-home.                                | BOOLEAN       |                |
+| `work_remote`                       | Indicates if the job allows full remote work.                          | BOOLEAN       |                |
+| `work_hybrid`                       | Indicates if the job has a hybrid work model.                          | BOOLEAN       |                |
+| `part_time`                         | Indicates if the job is part-time.                                     | BOOLEAN       |                |
+| `placement_type_id`                 | Identifier for the placement type of the job.                          | NUMBER        |                |
+| `max_pay`                           | Maximum pay for the job.                                               | NUMBER        | (16, 2)        |
+| `min_pay`                           | Minimum pay for the job.                                               | NUMBER        | (16, 2)        |
+| `min_pay_type_id`                   | Identifier for the minimum pay type.                                   | NUMBER        |                |
+| `min_pay_type`                      | Description of the minimum pay type.                                   | VARCHAR       | 10             |
+| `max_pay_type_id`                   | Identifier for the maximum pay type.                                   | NUMBER        |                |
+| `max_pay_type`                      | Description of the maximum pay type.                                   | VARCHAR       | 10             |
+| `open_date`                         | Date the job posting becomes active.                                   | TIMESTAMPNTZ  |                |
+| `end_date`                          | Date the job posting is no longer active.                              | TIMESTAMPNTZ  |                |
+| `duration`                          | Duration of the job or posting.                                        | VARCHAR       | 100            |
+| `customer_job_id`                   | Customer-provided identifier for the job.                              | VARCHAR       | 50             |
+| `public_desc`                       | Public description of the job posting.                                 | TEXT          |                |
+| `job_group_name`                    | Name of the group or category to which the job belongs.                | TEXT          |                |
+| `create_date`                       | Date the job posting record was created.                               | TIMESTAMPNTZ  |                |
+| `modify_date`                       | Date the job posting record was last modified.                         | TIMESTAMPNTZ  |                |
+| `enable_indeed_appy`                | Indicates if the job is enabled for Indeed Apply.                      | BOOLEAN       |                |
+| `suppress_indeed_auto_refresh_date` | Indicates if the Indeed auto-refresh date should be suppressed.        | BOOLEAN       |                |
+| `linkedin_company_id`               | LinkedIn company identifier associated with the job posting.           | NUMBER        |                |
+| `screener_questions_url`            | URL that presents the job screener questions in the JobGorilla format. | TEXT          |                |
 
 ### Landing Zone
 We have the option for you to drop an export file in a shared and secured location such as Google Drive or One Drive.
