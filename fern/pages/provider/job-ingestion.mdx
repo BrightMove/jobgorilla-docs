@@ -3,8 +3,7 @@ title: "Job Ingestion"
 description: "Prepare Jobs from your ATS for ingestion into JobGorilla."
 ---
 
-JobGorilla supports a wide variety of job data ingestion methods. This page provides an overview of the different
-methods available to Job Providers.
+JobGorilla supports a real time job update API for sending jobs.
 
 <Note>Our goal is to make getting your job data into JobGorilla reliably, predictably and easily. If you dont see an
   ingestion method here that works for your organization, please reach out to us so we can figure out a way that works
@@ -12,66 +11,123 @@ methods available to Job Providers.
 
 ## Ingestion Methods
 
-### Snowflake (Preferred)
-Create a data table in your Snowflake account and share the data with JobGorilla. We will plugin the table name into
-your onboarding form and have your jobs live in JobGorilla in no time.
+### API
 
-<Tip>Job attributes change and morph over time. If you see something missing that is important to one of your feeds, let
-  us know and we will get it added.</Tip>
+JobGorilla provides real-time job ingestion through RESTful API endpoints that allow you to publish, update, and delete jobs directly from your ATS or company job database. This ensures job data stays synchronized and up-to-date across all platforms.
 
-| **Column Name**                     | **Description**                                                        | **Data Type** | **Max Length** |
-|-------------------------------------|------------------------------------------------------------------------|---------------|----------------|
-| `id`                                | Unique identifier for the job posting.                                 | NUMBER        |                |
-| `company_id`                        | Identifier for the company associated with the job posting.            | NUMBER        |                |
-| `company_name`                      | Name of the company.                                                   | VARCHAR       | 200            |
-| `company_address`                   | Primary address of the company.                                        | VARCHAR       | 200            |
-| `company_address2`                  | Secondary address or additional address details.                       | VARCHAR       | 200            |
-| `company_city`                      | City where the company is located.                                     | VARCHAR       | 100            |
-| `company_state_abbr`                | Abbreviation of the state where the company is located.                | VARCHAR       | 10             |
-| `company_zip`                       | ZIP code of the company location.                                      | VARCHAR       | 25             |
-| `direct_employer`                   | Indicates if the job is posted by the direct employer.                 | BOOLEAN       |                |
-| `branding_company_name`             | Name of the company used for branding purposes.                        | VARCHAR       | 200            |
-| `public_company_name`               | Public-facing name of the company.                                     | VARCHAR       | 200            |
-| `apply_url`                         | URL where applicants can apply for the job.                            | TEXT          |                |
-| `job_title`                         | Title of the job posting.                                              | TEXT          |                |
-| `openings`                          | Number of job openings available.                                      | NUMBER        |                |
-| `location`                          | Detailed location information for the job.                             | TEXT          |                |
-| `city`                              | City of the job location.                                              | VARCHAR       | 400            |
-| `postal_code`                       | Postal code of the job location.                                       | VARCHAR       | 25             |
-| `state_abbr`                        | Abbreviation of the state of the job location.                         | VARCHAR       | 10             |
-| `state_name`                        | Full name of the state of the job location.                            | VARCHAR       | 250            |
-| `country_code`                      | Country code of the job location.                                      | VARCHAR       | 2              |
-| `country_name`                      | Full name of the country of the job location.                          | VARCHAR       | 600            |
-| `work_from_home`                    | Indicates if the job is work-from-home.                                | BOOLEAN       |                |
-| `work_remote`                       | Indicates if the job allows full remote work.                          | BOOLEAN       |                |
-| `work_hybrid`                       | Indicates if the job has a hybrid work model.                          | BOOLEAN       |                |
-| `part_time`                         | Indicates if the job is part-time.                                     | BOOLEAN       |                |
-| `placement_type_id`                 | Identifier for the placement type of the job.                          | NUMBER        |                |
-| `max_pay`                           | Maximum pay for the job.                                               | NUMBER        | (16, 2)        |
-| `min_pay`                           | Minimum pay for the job.                                               | NUMBER        | (16, 2)        |
-| `min_pay_type_id`                   | Identifier for the minimum pay type.                                   | NUMBER        |                |
-| `min_pay_type`                      | Description of the minimum pay type.                                   | VARCHAR       | 10             |
-| `max_pay_type_id`                   | Identifier for the maximum pay type.                                   | NUMBER        |                |
-| `max_pay_type`                      | Description of the maximum pay type.                                   | VARCHAR       | 10             |
-| `open_date`                         | Date the job posting becomes active.                                   | TIMESTAMPNTZ  |                |
-| `end_date`                          | Date the job posting is no longer active.                              | TIMESTAMPNTZ  |                |
-| `duration`                          | Duration of the job or posting.                                        | VARCHAR       | 100            |
-| `customer_job_id`                   | Customer-provided identifier for the job.                              | VARCHAR       | 50             |
-| `public_desc`                       | Public description of the job posting.                                 | TEXT          |                |
-| `job_group_name`                    | Name of the group or category to which the job belongs.                | TEXT          |                |
-| `create_date`                       | Date the job posting record was created.                               | TIMESTAMPNTZ  |                |
-| `modify_date`                       | Date the job posting record was last modified.                         | TIMESTAMPNTZ  |                |
-| `enable_indeed_appy`                | Indicates if the job is enabled for Indeed Apply.                      | BOOLEAN       |                |
-| `suppress_indeed_auto_refresh_date` | Indicates if the Indeed auto-refresh date should be suppressed.        | BOOLEAN       |                |
-| `linkedin_company_id`               | LinkedIn company identifier associated with the job posting.           | NUMBER        |                |
-| `screener_questions_url`            | URL that presents the job screener questions in the JobGorilla format. | TEXT          |                |
+#### Authentication
 
-### Landing Zone
-We have the option for you to drop an export file in a shared and secured location such as Google Drive or One Drive.
-Our system will pick up the file and ingest the jobs into JobGorilla.
+All API requests require authentication using the `X-JobGorilla-Key` header:
 
-<Tip>Contact JobGorilla support for the latest file format to get started.</Tip>
+```http
+X-JobGorilla-Key: your-api-key-here
+```
 
-### API - Coming Soon
-When our API ingestion is in place you will be able to update JobGorilla with your job data in real-time by posting
-payloads to our REST endpoints.
+#### Job Upsert (Create/Update)
+
+**Endpoint:** `POST /job`
+
+<Note>[Endpoint Documentation](/api-reference/jobs/manage-job).</Note>
+
+Use this endpoint to publish new jobs or update existing ones. The API intelligently handles both creation and updates based on the job identifier provided.
+
+**Purpose:**
+- Create new job postings in real-time
+- Update existing job details (title, description, compensation, etc.)
+- Maintain job synchronization between your ATS and JobGorilla
+
+**Request Requirements:**
+- **Content-Type:** `application/json`
+- **Authentication:** Required via `X-JobGorilla-Key` header
+- **Request Body:** JobPosting object with the following key fields:
+  - Job ID (unique identifier from your system)
+  - Company information
+  - Job title and description
+  - Apply URL
+  - Location details
+  - Compensation information
+
+**Response Codes:**
+- `200 OK`: Job successfully created or updated
+- `400 Bad Request`: Validation failure (missing required fields or invalid data)
+- `401 Unauthorized`: Missing or invalid API key
+- `403 Forbidden`: Insufficient permissions
+
+**Example Request:**
+```bash
+curl -X POST https://feed.jobgorilla.com/v3/job \
+  -H "X-JobGorilla-Key: your-api-key" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "jobId": "JOB-12345",
+    "title": "Software Engineer",
+    "description": "Join our team as a Software Engineer...",
+    "company": {
+      "name": "Tech Company Inc.",
+      "location": "San Francisco, CA"
+    },
+    "applyUrl": "https://company.com/apply/12345",
+    "location": "San Francisco, CA",
+    "compensation": {
+      "salary": {
+        "min": 80000,
+        "max": 120000
+      }
+    }
+  }'
+```
+
+#### Job Deletion
+
+**Endpoint:** `DELETE /job`
+
+<Note>[Endpoint Documentation](/api-reference/jobs/delete-job).</Note>
+
+Use this endpoint to remove jobs that are no longer available or have been filled.
+
+**Purpose:**
+- Remove job postings that are no longer active
+- Clean up expired or filled positions
+- Maintain accurate job availability
+
+**Request Requirements:**
+- **Content-Type:** `application/json`
+- **Authentication:** Required via `X-JobGorilla-Key` header
+- **Request Body:** Must include the job ID to be deleted
+
+**Response Codes:**
+- `200 OK`: Job successfully deleted
+- `400 Bad Request`: Validation failure or job not found
+- `401 Unauthorized`: Missing or invalid API key
+- `403 Forbidden`: Insufficient permissions
+- `406 Not Acceptable`: Deletion error
+
+**Example Request:**
+```bash
+curl -X DELETE https://feed.jobgorilla.com/v3/job \
+  -H "X-JobGorilla-Key: your-api-key" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "jobId": "JOB-12345"
+  }'
+```
+
+#### Best Practices for Real-Time Integration
+
+1. **Unique Job Identifiers**: Always use consistent, unique job IDs from your ATS
+2. **Error Handling**: Implement retry logic for temporary failures (5xx errors)
+3. **Rate Limiting**: Respect API rate limits to ensure reliable service
+4. **Validation**: Validate job data before sending to minimize 400 errors
+5. **Monitoring**: Log API responses to track successful integrations and identify issues
+6. **Webhooks**: Consider implementing webhooks for real-time job status updates
+
+#### Integration Workflow
+
+1. **New Job Published**: Use POST /job to create the job posting
+2. **Job Updated**: Use POST /job with the same job ID to update existing details
+3. **Job Filled/Expired**: Use DELETE /job to remove the posting
+4. **Status Monitoring**: Monitor API responses and implement appropriate error handling
+
+This API-first approach ensures your job data remains synchronized in real-time, providing candidates with the most current job opportunities while maintaining data integrity across platforms.
+
+

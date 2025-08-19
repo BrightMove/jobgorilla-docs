@@ -20,28 +20,59 @@ navigation:
     contents:
       - page: "Quickstart"
         path: "pages/quickstart.mdx"
+        icon: "duotone compass"
   - section: Job Boards
     slug: board
     contents:
       - page: "Job Feeds"
         path: pages/board/job-feed.mdx
+        icon: "duotone arrow-right"
   - section: Job Providers (ATS)
     slug: provider
     contents:
       - page: "Job Ingestion"
         path: pages/provider/job-ingestion.mdx
+        icon: "duotone arrow-left"
       - page: "Screener Questions"
         path: pages/provider/screener-questions.mdx
+        icon: "duotone clipboard-question"
       - page: "Webhooks"
         path: pages/provider/webhooks.mdx
+        icon: "duotone webhook"
   - section: Data Reference
     slug: data
     contents:
       - page: "Placement Types"
         path: pages/data/placement-types.mdx
+        icon: "duotone list"
       - page: "Pay Types"
         path: pages/data/pay-types.mdx
+        icon: "duotone money-check-dollar"
   - api: API Reference
+    paginated: true
+    flattened: true
+    layout:
+      - section: Job Publishing
+        summary: docs/api/job-publishing-summary.mdx
+        icon: duotone briefcase
+        slug: jobs
+        contents:
+          - GET /job/{guid}
+          - POST /job
+          - DELETE /job
+
+      - section: Job Feeds
+        icon: duotone seedling
+        slug: feed
+        contents:
+            - GET /feed/board/:guid
+
+      - section: Metadata
+#         summary: docs/api/metadata-summary.mdx
+        icon: duotone circle-info
+        slug: metadata
+        contents:
+          - GET /meta/boards
 
 logo:
   href: https://jobgorilla.com
