@@ -2,7 +2,7 @@
 api:
   specs:
     - openapi: >-
-        ../../../../../var/folders/8g/ztz29ky53szc8ms1s6vfr5300000gn/T/tmp-64764-7csXIg6feK4j/openapi.yaml
+        ../../../../../var/folders/8g/ztz29ky53szc8ms1s6vfr5300000gn/T/tmp-85763-5dpSeHUAnD6J/openapi.yaml
 default-group: local
 groups:
   local:

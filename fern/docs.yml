@@ -1,5 +1,6 @@
 instances:
   - url: https://jobgorilla.docs.buildwithfern.com
+    custom-domain: docs.jobgorilla.com
     edit-this-page:
       github:
         owner: BrightMove
